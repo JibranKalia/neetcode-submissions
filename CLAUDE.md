@@ -2,11 +2,25 @@
 
 Solving NeetCode 150 problems in JavaScript (natively supported on neetcode.io). Also working through Interview Kickstart material on the side. Many of these problems were solved over a year ago in Ruby — switched to JavaScript on 2026-05-05 and refreshing.
 
-This repo holds the auto-synced JavaScript solutions from neetcode.io under `Data Structures & Algorithms/<problem-slug>/`. Pull latest with `jj git fetch`. Use this directory as the source of truth for which problems have actually been completed (check git log for completion dates).
+This repo serves two roles:
 
-- `/Users/jibran.kalia/work/ob-vault/personal/interview-prep/PROGRESS.md` — combined date log of NeetCode + IK study (lives in Obsidian vault, rendered there)
+1. **Auto-synced NC submission tracker** — neetcode.io pushes each successful JavaScript submission to `Data Structures & Algorithms/<problem-slug>/submission-N.js`. Sync is one-way (neetcode.io → here) and triggers only on completion.
+2. **Claude Code working directory** — sessions start here so this `CLAUDE.md` and its conventions get loaded.
+
+Companion file (outside this repo):
+
+- `/Users/jibran.kalia/work/ob-vault/personal/interview-prep/PROGRESS.md` — human-readable date log in the Obsidian vault. Captures IK concepts, pitfalls, and any narrative notes that don't fit a code submission.
 
 Language: JavaScript
+
+## Checking what's been completed
+
+When asked "what have I done", "what NC problems have I solved", or anything similar:
+
+1. **Pull latest first**: `jj git fetch` (or `cd /Users/jibran.kalia/side/neetcode-submissions && git log` directly — the syncs land as plain git commits).
+2. **`git log` here is canonical for NC completion** — dates and problem slugs come from successful submissions only.
+3. **`PROGRESS.md` may lag** — it's a hand-maintained journal, so trust the git log for what's actually solved. But `PROGRESS.md` is canonical for IK material and pitfalls (those don't auto-sync).
+4. Reconcile if they disagree: git log is truth for NC; flag the discrepancy so I can update PROGRESS.md.
 
 ## Learning style
 
