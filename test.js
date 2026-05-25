@@ -1,90 +1,68 @@
 class Solution {
   /**
-   * @param {character[][]} board
-   * @return {boolean}
+   * @param {number[]} nums
+   * @return {number}
    */
-  isValidSudoku(board) {
-    /***
-     * 9 columns that need to be unique
-     * 9 rows that need to be unqiue
-     * 9 sub boxes that need to be uique
-     *
-     * Set for each of them 
-     * columnArray = [Set, Set ...]
-     * rowArray = [Set, Set ...]
-     * subBoxArray = [Set, Set ...]
-     *
-     * column = x
-     * row = y
-     *
-     * determineSubBox? 
-     *  - math.floor(x / 3) + Math.floor(y / 3) * 3
-     * [y][x]
+  longestConsecutive(nums) {
+    /**
+     * 2,
+     * 20, 
+     * 4, 
+     * 10,
+     * 3, 
+     * 4, 
+     * 5
      * 
-     *   [1, 2, . ]
+     * minNumber = 2
+     * maxNumber = 20
+     * 
+     * currSeq = 1
+     * maxSeq = 0
+     * 
+     * minNumber + 1
+     * isSeq curSeq +1 maxSeq = [curSeq, maxSeq].max
+     * else curSeq = 1
      */
 
-    const subBoxArray = [];
-    const columnArray = [];
-    const rowArray = [];
+    let maxNumber = -Infinity;
+    let minNumber = Infinity;
 
-    const subBoxIndex = (x, y) => { return (Math.floor(x / 3) + (Math.floor(y / 3) * 3)); }
+    const set = new Set();
 
-    for (let i = 0; i < 9; i++) {
-      subBoxArray[i] = new Set();
-      columnArray[i] = new Set();
-      rowArray[i] = new Set();
+    for (let i = 0; i < nums.length; i++) {
+      const val = nums[i]
+      maxNumber = Math.max(maxNumber, val);
+      minNumber = Math.min(minNumber, val);
+      set.add(val);
     }
 
-    for (let y = 0; y < 9; y++) {
-      for (let x = 0; x < 9; x++) {
-        const val = board[y][x];
-        if (val === '.') {
-          continue;
-        } else {
-          if (columnArray[x].has(val) || rowArray[y].has(val) || subBoxArray[subBoxIndex(x, y)].has(val)) {
-            return false;
-          }
-          columnArray[x].add(val);
-          rowArray[y].add(val);
-          subBoxArray[subBoxIndex(x, y)].add(val);
-        }
+    let currSeq = 1;
+    let maxSeq = 1;
+
+    for (let i = minNumber + 1; i <= maxNumber; i++) {
+      if (!set.has(i) || !set.has(i - 1)) {
+        currSeq = 1;
+        continue;
       }
+
+      currSeq += 1;
+      maxSeq = Math.max(currSeq, maxSeq);
+
     }
 
-    return true;
-
+    return maxSeq;
   }
 }
 
 
-const board =
-  [["1", "2", ".", ".", "3", ".", ".", ".", "."],
-  ["4", ".", ".", "5", ".", ".", ".", ".", "."],
-  [".", "9", "1", ".", ".", ".", ".", ".", "3"],
-  ["5", ".", ".", ".", "6", ".", ".", ".", "4"],
-  [".", ".", ".", "8", ".", "3", ".", ".", "5"],
-  ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
-  [".", ".", ".", ".", ".", ".", "2", ".", "."],
-  [".", ".", ".", "4", "1", "9", ".", ".", "8"],
-  [".", ".", ".", ".", "8", ".", ".", "7", "9"]]
+const nums1 = [2, 20, 4, 10, 3, 4, 5]
 
+const res1 = new Solution().longestConsecutive(nums1);
+console.log(res1);
 
-const res = new Solution().isValidSudoku(board);
+const nums2 = [0, 3, 2, 5, 4, 6, 1, 1];
 
-console.log(res);
-
-const board2 =
-  [["1", "2", ".", ".", "3", ".", ".", ".", "."],
-  ["4", ".", ".", "5", ".", ".", ".", ".", "."],
-  [".", "9", "8", ".", ".", ".", ".", ".", "3"],
-  ["5", ".", ".", ".", "6", ".", ".", ".", "4"],
-  [".", ".", ".", "8", ".", "3", ".", ".", "5"],
-  ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
-  [".", ".", ".", ".", ".", ".", "2", ".", "."],
-  [".", ".", ".", "4", "1", "9", ".", ".", "8"],
-  [".", ".", ".", ".", "8", ".", ".", "7", "9"]]
-
-const res2 = new Solution().isValidSudoku(board2);
-
+const res2 = new Solution().longestConsecutive(nums2);
 console.log(res2);
+
+
