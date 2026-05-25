@@ -24,30 +24,21 @@ class Solution {
      * else curSeq = 1
      */
 
-    let maxNumber = -Infinity;
-    let minNumber = Infinity;
+    if (nums.length === 0) return 0;
 
-    const set = new Set();
 
-    for (let i = 0; i < nums.length; i++) {
-      const val = nums[i]
-      maxNumber = Math.max(maxNumber, val);
-      minNumber = Math.min(minNumber, val);
-      set.add(val);
-    }
+    const set = new Set(nums);
 
-    let currSeq = 1;
     let maxSeq = 1;
 
-    for (let i = minNumber + 1; i <= maxNumber; i++) {
-      if (!set.has(i) || !set.has(i - 1)) {
-        currSeq = 1;
-        continue;
+    for (const num of set) {
+      if (!set.has(num - 1)) {
+        let length = 1;
+        while (set.has(num + length)) {
+          length += 1;
+          maxSeq = Math.max(length, maxSeq);
+        }
       }
-
-      currSeq += 1;
-      maxSeq = Math.max(currSeq, maxSeq);
-
     }
 
     return maxSeq;
