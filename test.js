@@ -1,62 +1,52 @@
 class Solution {
   /**
-   * @param {number[]} heights
+   * @param {number[]} height
    * @return {number}
    */
-  maxArea(heights) {
-    const h = heights;
+  trap(height) {
+    const h = height;
+    const n = h.length;
 
-    function volume(start, end) {
-      const width = end - start;
-      const height = Math.min(h[end], h[start]);
-      const vol = width * height;
-      return vol;
+    const maxR = Array(n).fill(0);
+    const maxL = Array(n).fill(0);
+
+    maxL[0] = h[0];
+    maxR[n - 1] = h[n - 1];
+
+    for (let i = 1; i < n; i++) {
+      maxL[i] = Math.max(maxL[i - 1], h[i]);
     }
 
-    let max = -Infinity;
-    let l = 0;
-    let r = h.length - 1;
+    for (let j = n - 2; j > - 0; j--) {
+      maxR[j] = Math.max(h[j], maxR[j + 1]);
+    }
 
-    while (l < r) {
-      max = Math.max(max, volume(l, r));
-
-      if (h[l] < h[r]) {
-        l++;
-      } else {
-        r--;
+    function volume(i) {
+      const minH = Math.min(maxR[i], maxL[i])
+      if (minH > 0) {
+        return minH - h[i]
       }
+      return 0;
     }
 
-    return max;
+    let maxVol = 0;
+
+    for (let i = 0; i < n; i++) {
+      const vol = volume(i)
+      maxVol += vol;
+    }
+
+    return maxVol
   }
-  /**
-   * volume(start, end)
-   *  width = end - start
-   *  height = min(h[end], h[start])
-   *
-   *  return width * height
-   *
-   *
-   * Start with the widest container
-   *
-   * On every iteration compare l - r and if move inside on the smaller one
-   *
-   * while (l < r)
-   *  if h[l] < h[r]
-   *    l++;
-   *  else
-   *    r--;
-   *
-   *  maxVolume = volume(l, r);
-   *
-   */
 }
 
 
-const height = [1, 7, 2, 5, 4, 7, 3, 6]
+
+const height = [4, 2, 0, 3, 2, 5]
 
 
-const res = new Solution().maxArea(height)
+
+const res = new Solution().trap(height)
 
 console.log(res);
 
