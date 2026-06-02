@@ -26,6 +26,7 @@ Sync the NeetCode submission tracker and reconcile every bookkeeping doc. This i
 5. **Update SEEN-BEFORE.md** for each new problem:
    - If it's listed under "NC150 problems with a prior solve", append ` ✅` to that line (if not already there).
    - For each newly-synced problem that had a prior solve, surface it in the summary: "↺ {Problem} — you'd solved this before in {tags} (warm restart)."
+   - Refresh the headline stat blockquote at the top of SEEN-BEFORE.md if it changed: **all-time unique** (dedupe IK + LC + JS run across sources, count a problem once; exclude Shuffle String — Wrong Answer), **NC150 touched** (`/150`, prior-solve list + fresh JS-run problems with no prior), and **2026 JS run** (`N/150`, matches the PROGRESS.md header).
 
 6. **Phase-boundary check.** The re-solving phase ends at the first NC150 problem with **no** prior solve in SEEN-BEFORE.md. In roadmap order that's `Longest Substring Without Repeating Characters` (Sliding Window #2). If any newly-synced problem is net-new (not in the prior-solve list):
    - Announce it loudly: "🎉 You've left the re-solving phase — {Problem} is net-new ground."
