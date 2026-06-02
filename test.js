@@ -1,52 +1,62 @@
 class Solution {
   /**
-   * @param {number[]} nums
-   * @return {number[][]}
+   * @param {number[]} heights
+   * @return {number}
    */
-  threeSum(nums) {
-    const n = nums.sort((a, b) => a - b);
-    const len = n.length;
-    const ret = [];
+  maxArea(heights) {
+    const h = heights;
 
-    /**
-     * [-4, -1, -1, 0, 1, 2, 2]
-     * 
-     * - target and pass it to two sum. if not empty array add to res
-     * - duplicates?
-     *    Sorting will prevent
-     */
+    function volume(start, end) {
+      const width = end - start;
+      const height = Math.min(h[end], h[start]);
+      const vol = width * height;
+      return vol;
+    }
 
-    function twoSum(l, target) {
-      let left = l;
-      let right = len - 1;
+    let max = -Infinity;
+    let l = 0;
+    let r = h.length - 1;
 
-      while (left < right) {
-        const sum = n[left] + n[right];
-        if (sum === target) {
-          ret.push([-target, n[left], n[right]]);
-          left++;
-          right--;
-          while (left < right && n[left] === n[left - 1]) left++;
-          while (left < right && n[right] === n[right + 1]) right--;
-        } else if (sum < target) {
-          left++;
-        } else {
-          right--;
-        }
+    while (l < r) {
+      max = Math.max(max, volume(l, r));
+
+      if (h[l] < h[r]) {
+        l++;
+      } else {
+        r--;
       }
     }
 
-    for (let i = 1; i < len - 1; i++) {
-      if (i > 1 && n[i - 2] === n[i - 1]) continue;
-      twoSum(i, -(n[i - 1]));
-    }
-
-    return ret;
+    return max;
   }
+  /**
+   * volume(start, end)
+   *  width = end - start
+   *  height = min(h[end], h[start])
+   *
+   *  return width * height
+   *
+   *
+   * Start with the widest container
+   *
+   * On every iteration compare l - r and if move inside on the smaller one
+   *
+   * while (l < r)
+   *  if h[l] < h[r]
+   *    l++;
+   *  else
+   *    r--;
+   *
+   *  maxVolume = volume(l, r);
+   *
+   */
 }
 
-const n = [0, 0, 0, 0];
-const res = new Solution().threeSum(n)
+
+const height = [1, 7, 2, 5, 4, 7, 3, 6]
+
+
+const res = new Solution().maxArea(height)
 
 console.log(res);
 

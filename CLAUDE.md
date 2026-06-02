@@ -7,9 +7,10 @@ This repo serves two roles:
 1. **Auto-synced NC submission tracker** — neetcode.io pushes each successful JavaScript submission to `Data Structures & Algorithms/<problem-slug>/submission-N.js`. Sync is one-way (neetcode.io → here) and triggers only on completion.
 2. **Claude Code working directory** — sessions start here so this `CLAUDE.md` and its conventions get loaded.
 
-Companion file (outside this repo):
+Companion files (outside this repo, both in the Obsidian vault at `/Users/jibran.kalia/work/ob-vault/personal/interview-prep/`):
 
-- `/Users/jibran.kalia/work/ob-vault/personal/interview-prep/PROGRESS.md` — human-readable date log in the Obsidian vault. Captures IK concepts, pitfalls, and any narrative notes that don't fit a code submission.
+- `PROGRESS.md` — human-readable date log. Captures IK concepts, pitfalls, and any narrative notes that don't fit a code submission.
+- `SEEN-BEFORE.md` — "seen before" tracker. Every NC150 problem already solved pre-2026 in Interview Kickstart (2022, Ruby) or LeetCode (2022–2024), tagged by source/year; an off-NC150 "done otherwise" list; and the re-solving-vs-net-new phase tracker.
 
 Language: JavaScript
 
@@ -20,7 +21,19 @@ When asked "what have I done", "what NC problems have I solved", or anything sim
 1. **Pull latest first**: `jj git fetch` (or `cd /Users/jibran.kalia/side/neetcode-submissions && git log` directly — the syncs land as plain git commits).
 2. **`git log` here is canonical for NC completion** — dates and problem slugs come from successful submissions only.
 3. **`PROGRESS.md` may lag** — it's a hand-maintained journal, so trust the git log for what's actually solved. But `PROGRESS.md` is canonical for IK material and pitfalls (those don't auto-sync).
-4. Reconcile if they disagree: git log is truth for NC; flag the discrepancy so I can update PROGRESS.md.
+4. **`SEEN-BEFORE.md` is canonical for pre-2026 coverage** — what I solved before in IK (Ruby) or LeetCode. This is "have I seen it before," distinct from git log's "have I redone it in the 2026 JS run." Prior coverage ≠ current-run completion.
+5. Reconcile if they disagree: git log is truth for NC completion; flag the discrepancy so I can update PROGRESS.md / SEEN-BEFORE.md.
+
+## Syncing submissions
+
+`/sync-neetcode` (project slash command) is the one-step bookkeeping routine: it fetches new submissions and reconciles PROGRESS.md (date log + count), SEEN-BEFORE.md (`✅` + warm-restart flags), and the phase boundary. It's idempotent — run it any time. Prefer it over doing the bookkeeping by hand.
+
+## Flagging prior coverage
+
+I've forgotten a lot of what I solved pre-2026 and want to know when a problem is one I've seen before, so I treat it as a warm restart, not cold.
+
+- When I start or finish an NC150 problem, check `SEEN-BEFORE.md`. If it's listed, say so and name the source/year (e.g. "you did this in IK'22 and LC'24").
+- Watch the **phase boundary**: I'm in "re-solving past problems" mode until I hit the first problem with no prior solve. In roadmap order that's `Longest Substring Without Repeating Characters` (Sliding Window #2). Call it out when I reach it, and update `SEEN-BEFORE.md`'s phase tracker.
 
 ## Learning style
 
