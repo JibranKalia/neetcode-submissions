@@ -21,7 +21,7 @@ Sync the NeetCode submission tracker and reconcile every bookkeeping doc. This i
 
 4. **Update PROGRESS.md** for each new problem:
    - Add `- NC · {Easy|Medium|Hard} — {Problem Name} — {Category}` under the matching `## YYYY-MM-DD` header (create the header if absent; most-recent date on top). Follow the Entry-format conventions in the repo `CLAUDE.md` (tabs for sub-bullets, plain `NC`/`IK` tags, no brackets).
-   - Recompute the header line `NeetCode 150: N/150 (Easy: e/28, Med: m/101, Hard: h/21)` from the full solved set, and bump `updated:` in the frontmatter to today.
+   - Recompute the header line `NeetCode 150: N/150 (Easy: e/28, Med: m/101, Hard: h/21) — 2026 JS run, from git log` from the solved set. **This count is the 2026 JS run only** (git-log truth) — NOT all-time exposure. Pre-2026 IK/LC coverage lives in SEEN-BEFORE.md and never feeds this number. Bump `updated:` to today.
 
 5. **Update SEEN-BEFORE.md** for each new problem:
    - If it's listed under "NC150 problems with a prior solve", append ` ✅` to that line (if not already there).
