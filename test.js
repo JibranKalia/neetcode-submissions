@@ -1,54 +1,45 @@
 class Solution {
-
   /**
- * @param {number[]} customers
- * @param {number[]} grumpy
- * @param {number} minutes
- * @return {number}
- */
-  maxSatisfied(customers, grumpy, minutes) {
-    let baseSum = 0;
-    let gain = 0;
-    const k = minutes;
+   * @param {string} s
+   * @param {number} k
+   * @return {number}
+   */
+  numKLenSubstrNoRepeats(s, k) {
+    if (s.length < k) return 0;
+    const set = new Array(26).fill(0);
+    let totalNoRepeated = 0;
 
-    for (let i = 0; i < customers.length; i++) {
-      if (grumpy[i] === 0) {
-        baseSum += customers[i]
-      }
+    function isValid() {
+      return set.every((c) => c <= 1);
+    }
+
+    function idx(i) {
+      return s.charCodeAt(i) - 'a'.charCodeAt(0);
     }
 
     for (let i = 0; i < k; i++) {
-      if (grumpy[i] === 1) {
-        gain += customers[i];
+      set[idx(i)] += 1;
+    }
+
+    if (isValid()) {
+      totalNoRepeated++;
+    }
+
+
+    for (let i = k; i < s.length; i++) {
+      set[idx(i)] += 1;
+      set[idx(i - k)] -= 1;
+      if (isValid()) {
+        totalNoRepeated++;
       }
     }
 
-    let maxGain = Math.max(0, gain);
-
-    for (let i = k; i < customers.length; i++) {
-      if (grumpy[i] === 1) {
-        gain += customers[i];
-      }
-      if (grumpy[i - k] === 1) {
-        gain -= customers[i - k];
-      }
-
-      maxGain = Math.max(maxGain, gain);
-    }
-
-    return baseSum + maxGain;
-  };
+    return totalNoRepeated;
+  }
 }
 
-const customers = [1, 0, 1, 2, 1, 1, 7, 5];
-const grumpy = [0, 1, 0, 1, 0, 1, 0, 1];
-const minutes = 3;
+const s = "havefunonneetcode"
+const k = 5
 
-// const customers = [10, 1, 7];
-//
-// const grumpy = [0, 0, 0];
-// const minutes = 2
-
-const res = new Solution().maxSatisfied(customers, grumpy, minutes)
-
+const res = new Solution().numKLenSubstrNoRepeats(s, k);
 console.log('res', res);
