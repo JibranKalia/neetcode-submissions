@@ -1,4 +1,33 @@
+class Deque {
+  constructor() {
+    this.arr = [];
+    this.left = 0;
+  }
+
+  popLeft() {
+    this.left++;
+  }
+
+  peekLeft() {
+    return this.arr[this.left];
+  }
+
+  peekRight() {
+    return this.arr[this.arr.length - 1]
+  }
+
+  pushIn(val) {
+    while (this.left < this.arr.length && this.peekRight() < val) {
+      this.arr.pop();
+    }
+    this.arr.push(val);
+    console.log('pushIn', val, this.left, this.arr);
+  }
+
+}
+
 class Solution {
+  peekLeft
   /**
    * @param {number[]} nums
    * @param {number} k
@@ -6,37 +35,30 @@ class Solution {
    */
   maxSlidingWindow(nums, k) {
     const res = [];
-    const queue = new Array(nums.length).fill(null);
-    //intial value
-    queue[0] = 0;
-
-    let left = 0;
-    let right = 0;
+    const q = new Deque();
+    q.pushIn(nums[0]);
 
     // build inital window
     for (let i = 1; i < k; i++) {
-      while (left <= right && nums[queue[right]] < nums[i]) {
-        right--;
-      }
-      right++;
-      queue[right] = i;
+      q.pushIn(nums[i])
     }
 
+    console.log(q.peekLeft());
+
     // push for inital window
-    res.push(nums[queue[left]]);
+    res.push(q.peekLeft());
 
     for (let i = k; i < nums.length; i++) {
-      const windowLeft = i - k + 1;
-      while (left <= right && queue[left] < windowLeft) {
-        left++;
+      const windowLeft = i - k;
+      if (q.peekLeft() === nums[windowLeft]) {
+        q.popLeft();
       }
-      while (left <= right && nums[queue[right]] < nums[i]) {
-        right--;
-      }
-      right++;
-      queue[right] = i;
 
-      res.push(nums[queue[left]]);
+      q.pushIn(nums[i]);
+
+      console.log("peek", q.peekLeft());
+
+      res.push(q.peekLeft());
     }
 
     return res;
@@ -62,7 +84,13 @@ class Solution {
 
 // const nums = [1, -1]
 // const k = 1
-const nums = [1, 3, -1, -3, 5, 3, 6, 7]
+// const nums = [1, 3, -1, -3, 5, 3, 6, 7]
+// const k = 3
+
+// const nums = [1, 2, 1, 0, 4, 2, 6];
+// const k = 3;
+
+const nums = [1, 2, 1, 0, 4, 2, 6]
 const k = 3
 
 const res = new Solution().maxSlidingWindow(nums, k);
